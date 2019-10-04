@@ -1,6 +1,6 @@
 {
   "name": "copy-own",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Copies an object’s own properties to another object.",
   "keywords": [
     "copy",
