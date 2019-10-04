@@ -50,6 +50,37 @@ describe('copyOwn()', function () {
     assert.strictEqual(dest.key, 1)
   })
 
+  it('should silently fail to copy duplicated properties if `override` is false', function () {
+    const dest = {key: 1}
+    assert.strictEqual(dest.key, 1)
+    copyOwn({key: 2}, dest, {override: false})
+    assert.strictEqual(dest.key, 1)
+  })
+
+  it('should override properties by default', function () {
+    class Cls { get key () { return 1 }}
+    const dest = new Cls()
+    assert.strictEqual(dest.key, 1)
+    copyOwn({key: 2}, dest)
+    assert.strictEqual(dest.key, 2)
+  })
+
+  it('should override properties even when `overwrite` is `false`', function () {
+    class Cls { get key () { return 1 }}
+    const dest = new Cls()
+    assert.strictEqual(dest.key, 1)
+    copyOwn({key: 2}, dest, {overwrite: false})
+    assert.strictEqual(dest.key, 2)
+  })
+
+  it('should silently fail to copy overriding properties if `override` is false', function () {
+    class Cls { get key () { return 1 }}
+    const dest = new Cls()
+    assert.strictEqual(dest.key, 1)
+    copyOwn({key: 2}, dest, {override: false})
+    assert.strictEqual(dest.key, 1)
+  })
+
   it('should include non-enumerable properties by default', function () {
     const source = {}
     Object.defineProperty(source, 'noEnum', {enumerable: false, value: 123})
